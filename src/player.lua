@@ -41,8 +41,10 @@ function Player:update(dt)
 
 	-- Vertical movement handler
 	if love.keyboard.isDown("down", "s") then
+		print("move down")
 		dy = directions.down
 	elseif love.keyboard.isDown("up", "w") then
+		print("move up")
 		dy = directions.up
 	end
 	-- Horizontal movement handler
@@ -64,16 +66,13 @@ function Player:update(dt)
 	vx = vx + dx + self.accel * dt
 	vy = vy + dy + self.accel * dt
 	self.body:setLinearVelocity(vx, vy)
-
 	self.gun:update(dt)
 end
 
 function Player:draw(dt)
-	local xPos = self.body:getX()
-	local yPos = self.body:getY()
 	local size = self.shape:getRadius()
-	love.graphics.circle("line", xPos, yPos, size)
-	self.gun:draw()
+	love.graphics.circle("fill", self.x, self.y, size)
+	self.gun:draw(self.x, self.y)
 end
 
 return Player

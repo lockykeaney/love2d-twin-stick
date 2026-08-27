@@ -33,11 +33,13 @@ end
 function Gun:update(dt)
 	-- direction player is facing
 	if love.keyboard.isDown("k") then
+		print("shooting down")
 		self.direction_y = directions.down
 		self.direction_x = 0
 	end
 
 	if love.keyboard.isDown("i") then
+		print("shooting up")
 		self.direction_y = directions.up
 		self.direction_x = 0
 	end
@@ -54,11 +56,8 @@ function Gun:update(dt)
 	end
 end
 
-function Gun:draw()
-	local xPos = self.body:getX()
-	local yPos = self.body:getY()
-
-	love.graphics.circle("fill", xPos + self.size * self.direction_x, yPos + self.size * self.direction_y, 10)
+function Gun:draw(x, y)
+	love.graphics.circle("fill", x + self.size * self.direction_x, y + self.size * self.direction_y, 10)
 end
 
 return Gun
