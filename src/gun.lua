@@ -1,4 +1,6 @@
 local Object = require("lib/classic")
+local Entity = require("entities/entity")
+local Bullet = require("bullet")
 
 local directions = {
 	up = -1,
@@ -20,44 +22,56 @@ function Gun:new(body, size, x, y)
 	self.size = size
 	self.x = x
 	self.y = y
-	self.fire_rate = 300
-	self.bullet_speed = 800
+	self.dx = directions.right
+	self.dy = 0
+	self.fire_rate = 0.08 -- os.clock is in seconds.
 
-	self.is_firing = false
 	self.timer = 0
-
-	self.direction_x = directions.right
-	self.direction_y = 0
+	self.bullets = {}
 end
 
-function Gun:update(dt)
+function Gun:update(player, dt)
+	self.x = player.x
+	self.y = player.y
+
+	local function handle_firing()
+		local now = os.clock()
+		local can_shoot = now - self.timer >= self.fire_rate
+		if can_shoot then
+			local b = Bullet(self.x, self.y, self.dx, self.dy)
+			table.insert(self.bullets, b)
+			self.timer = os.clock()
+		end
+	end
+	for _, b in ipairs(self.bullets) do
+		b:update(dt)
+	end
 	-- direction player is facing
 	if love.keyboard.isDown("k") then
-		print("shooting down")
-		self.direction_y = directions.down
-		self.direction_x = 0
-	end
-
-	if love.keyboard.isDown("i") then
-		print("shooting up")
-		self.direction_y = directions.up
-		self.direction_x = 0
-	end
-
-	if love.keyboard.isDown("l") then
-		self.direction_y = 0
-		self.direction_x = directions.right
-		self.is_firing = true
-	end
-
-	if love.keyboard.isDown("j") then
-		self.direction_y = 0
-		self.direction_x = directions.left
+		self.dy = directions.down
+		self.dx = 0
+		handle_firing()
+	elseif love.keyboard.isDown("i") then
+		self.dy = directions.up
+		self.dx = 0
+		handle_firing()
+	elseif love.keyboard.isDown("l") then
+		self.dy = 0
+		self.dx = directions.right
+		handle_firing()
+	elseif love.keyboard.isDown("j") then
+		self.dy = 0
+		self.dx = directions.left
+		handle_firing()
 	end
 end
 
 function Gun:draw(x, y)
-	love.graphics.circle("fill", x + self.size * self.direction_x, y + self.size * self.direction_y, 10)
+	love.graphics.circle("fill", x + self.size * self.dx, y + self.size * self.dy, 10)
+
+	for _, b in ipairs(self.bullets) do
+		b:draw()
+	end
 end
 
 return Gun

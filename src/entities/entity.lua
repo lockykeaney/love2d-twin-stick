@@ -4,12 +4,17 @@ local Object = require("lib/classic")
 local Entity = Object:extend()
 
 -- Class constructor. Init with Entity(), not Entity:new()
-function Entity:new(x, y)
-	self.x = x
-	self.y = y
+---@param name string
+function Entity:new(name)
+	self.name = name
+	self.logger = function()
+		print(self.name)
+	end
 end
 
-function Entity:update(dt) end
+function Entity:update(dt)
+	self.logger()
+end
 
 function Entity:draw() end
 

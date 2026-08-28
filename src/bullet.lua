@@ -1,30 +1,25 @@
 local Object = require("lib/classic")
 
----@class Bullets
-local Bullets = Object:extend()
+---@class Bullet
+local Bullet = Object:extend()
 
 -- Class constructor. Init with Entity(), not Entity:new()
-function Bullets:new(x, y)
+function Bullet:new(x, y, dx, dy)
 	self.x = x
 	self.y = y
-	self.table = {}
+	self.dx = dx
+	self.dy = dy
+	self.speed = 500
 end
 
-function Bullets:create()
-	local new_bullet = {
-		x = self.x,
-		y = self.y,
-		dx = 0,
-		dy = 0,
-	}
-	table.insert(self.table, 1, new_bullet)
+function Bullet:update(dt)
+	self.y = self.y + self.dy * self.speed * dt
+	self.x = self.x + self.dx * self.speed * dt
 end
 
-function Bullets:update(dt) end
-
-function Bullets:draw()
+function Bullet:draw()
 	love.graphics.setColor(1, 1, 0.2)
 	love.graphics.circle("fill", self.x, self.y, 10)
 end
 
-return Bullets
+return Bullet

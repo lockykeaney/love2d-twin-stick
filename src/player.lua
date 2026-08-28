@@ -1,4 +1,5 @@
 local Object = require("lib/classic")
+local Entity = require("entities/entity")
 local Gun = require("gun")
 
 local directions = {
@@ -9,7 +10,7 @@ local directions = {
 }
 
 ---@class Player
-local Player = Object:extend()
+local Player = Entity:extend()
 
 ---@param world love.World
 ---@param x number
@@ -41,10 +42,8 @@ function Player:update(dt)
 
 	-- Vertical movement handler
 	if love.keyboard.isDown("down", "s") then
-		print("move down")
 		dy = directions.down
 	elseif love.keyboard.isDown("up", "w") then
-		print("move up")
 		dy = directions.up
 	end
 	-- Horizontal movement handler
@@ -66,7 +65,7 @@ function Player:update(dt)
 	vx = vx + dx + self.accel * dt
 	vy = vy + dy + self.accel * dt
 	self.body:setLinearVelocity(vx, vy)
-	self.gun:update(dt)
+	self.gun:update(self, dt)
 end
 
 function Player:draw(dt)
