@@ -1,6 +1,5 @@
-local Object = require("lib/classic")
 local Entity = require("entities/entity")
-local Gun = require("gun")
+local Gun = require("player/gun")
 
 local directions = {
 	up = -1,
@@ -9,16 +8,14 @@ local directions = {
 	right = 1,
 }
 
----@class Player
 local Player = Entity:extend()
 
 ---@param world love.World
 ---@param x number
 ---@param y number
 function Player:new(world, x, y)
+	Player.super.new(self, "Player", x, y)
 	self.world = world
-	self.x = x
-	self.y = y
 	self.body = love.physics.newBody(world, x, y, "static")
 	self.shape = love.physics.newCircleShape(30)
 	self.fixture = love.physics.newFixture(self.body, self.shape)

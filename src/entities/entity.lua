@@ -5,16 +5,16 @@ local Entity = Object:extend()
 
 -- Class constructor. Init with Entity(), not Entity:new()
 ---@param name string
-function Entity:new(name)
+---@param x number
+---@param y number
+function Entity:new(name, x, y)
 	self.name = name
-	self.logger = function()
-		print(self.name)
-	end
+	self.x = x
+	self.y = y
+	print("entity", self.name)
 end
 
-function Entity:update(dt)
-	self.logger()
-end
+function Entity:update(dt) end
 
 function Entity:draw() end
 

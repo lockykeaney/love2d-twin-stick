@@ -1,6 +1,6 @@
 local Object = require("lib/classic")
 local Entity = require("entities/entity")
-local Bullet = require("bullet")
+local Bullet = require("player/bullet")
 
 local directions = {
 	up = -1,

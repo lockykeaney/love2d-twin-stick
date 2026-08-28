@@ -1,15 +1,16 @@
-local Object = require("lib/classic")
+local Entity = require("entities/entity")
 
----@class Bullet
-local Bullet = Object:extend()
+local Bullet = Entity:extend()
 
--- Class constructor. Init with Entity(), not Entity:new()
+---@param x number
+---@param y number
+---@param dx number
+---@param dy number
 function Bullet:new(x, y, dx, dy)
-	self.x = x
-	self.y = y
+	Bullet.super.new(self, "Bullet", x, y)
 	self.dx = dx
 	self.dy = dy
-	self.speed = 500
+	self.speed = 1000
 end
 
 function Bullet:update(dt)
