@@ -1,4 +1,4 @@
-local Arena = require("arena")
+local Arena = require("game/arena")
 
 local arena
 

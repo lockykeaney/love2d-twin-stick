@@ -1,15 +1,13 @@
-local Object = require("lib/classic")
+local Entity = require("entities/entity")
 
----@class Tile
-local Tile = Object:extend()
+local Tile = Entity:extend()
 
 ---@param world love.World
 ---@param tx number
 ---@param ty number
 ---@param tileSize number
 function Tile:new(world, tx, ty, tileSize)
-	self.x = tx
-	self.y = ty
+	Tile.super.new(self, "Tile", tx, ty)
 	self.tileSize = tileSize
 	self.body = love.physics.newBody(world, tx, ty, "static")
 	self.shape = love.physics.newRectangleShape(tileSize, tileSize)

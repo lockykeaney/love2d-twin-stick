@@ -1,4 +1,4 @@
-local Tile = require("tile")
+local Tile = require("tiles/tile")
 
 ---@class ArenaTile
 local ArenaTile = Tile:extend()
