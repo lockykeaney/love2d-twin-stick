@@ -2,6 +2,7 @@ local Object = require("lib/classic")
 local Player = require("player/player")
 local ArenaTile = require("tiles/arena_tile")
 local BoundaryTile = require("tiles/boundary_tile")
+local World = require("lib/windfield")
 
 local function beginContact(a, b, coll)
 	print("begin contact")
